@@ -1,0 +1,32 @@
+.layout {
+  position: relative;
+  width: 100%;
+  height: 400px;
+}
+.sider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  background-color: #ddd;
+}
+.header {
+  background-color: #aaa;
+  height: 60px;
+}
+.sider-resizer {
+  position: absolute;
+  width: 6px;
+  top: 0;
+  bottom: 0;
+  cursor: col-resize;
+}
+.resize-mask {
+  background: rgba(0, 0, 0, 0);
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  cursor: col-resize;
+}
