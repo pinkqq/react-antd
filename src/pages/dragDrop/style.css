@@ -1,0 +1,30 @@
+.my-dnd ul {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  background-color: #eee;
+}
+
+.my-dnd li {
+  cursor: default;
+  list-style: none;
+  border-bottom: 1px solid #ddd;
+  padding: 10px;
+  margin: 0;
+  width: 300px;
+  background-color: #fff;
+  cursor: grab;
+}
+
+.my-dnd li:hover {
+  background-color: lightsteelblue;
+}
+
+.my-dnd-mask {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0);
+}

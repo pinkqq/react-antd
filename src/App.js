@@ -105,7 +105,7 @@ function App(props) {
             {routers.map(({ path, component }) => {
               const Component = component.default;
               return (
-                <Route path={path}>
+                <Route key={path} path={path}>
                   <Component />
                 </Route>
               );
