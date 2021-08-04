@@ -40,6 +40,7 @@ const Dnd = () => {
   const [items, setItems] = useState(getItems(11));
 
   const onDragEnd = (result) => {
+    console.log(result);
     if (!result.destination) {
       return;
     }

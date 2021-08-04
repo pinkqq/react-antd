@@ -64,6 +64,11 @@ const routers = [
     path: '/dnd',
     component: require('./pages/dnd'),
   },
+  {
+    name: 'DndPro',
+    path: '/dnd-pro',
+    component: require('./pages/dndPro'),
+  },
   { name: 'Home', path: '/', component: require('./pages/index') },
 ];
 function App(props) {
