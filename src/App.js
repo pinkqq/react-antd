@@ -59,6 +59,11 @@ const routers = [
     path: '/drag-drop',
     component: require('./pages/dragDrop'),
   },
+  {
+    name: 'Dnd',
+    path: '/dnd',
+    component: require('./pages/dnd'),
+  },
   { name: 'Home', path: '/', component: require('./pages/index') },
 ];
 function App(props) {
