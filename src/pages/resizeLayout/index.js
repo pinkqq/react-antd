@@ -6,7 +6,7 @@ import './style.css';
 
 export default function ResizeLayout() {
   const [siderWidth, setSiderWidth] = useState(
-    localStorage.getItem('siderWidth') || 150,
+    parseInt(localStorage.getItem('siderWidth')) || 150,
   );
   const [dragging, setDragging] = useState(false);
   const [startPageX, setStartPageX] = useState(0);
