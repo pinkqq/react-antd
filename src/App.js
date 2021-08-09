@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   BrowserRouter as Router,
   Route,
@@ -7,70 +8,84 @@ import {
 } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Menu } from 'antd';
-import Login from './pages/login';
+import Loadable from 'react-loadable';
 import Table from './pages/table';
 import Detail from './pages/detail';
 import Step from './pages/step';
 import './App.css';
 
+function Loading() {
+  return <div>Loading...</div>;
+}
+
+const AsyncLogin = Loadable({
+  loader: () => import('./pages/login'), // oh no!
+  loading: Loading,
+});
+
 const routers = [
   {
     name: 'Form',
     path: '/form',
-    component: require('./pages/form'),
+    loader: () => import('./pages/form'),
   },
   {
     name: 'DynamicForm',
     path: '/dynamic-form',
-    component: require('./pages/dynamicForm'),
+    loader: () => import('./pages/dynamicForm'),
   },
   {
     name: 'Multiple Request',
     path: '/multiple-request',
-    component: require('./pages/multipleRequest'),
+    loader: () => import('./pages/multipleRequest'),
   },
   {
     name: 'Multiple Request Async',
     path: '/multiple-request-async',
-    component: require('./pages/multipleRequest'),
+    loader: () => import('./pages/multipleRequestAsync'),
   },
   {
     name: 'Resize Layout',
     path: '/resize-layout',
-    component: require('./pages/resizeLayout'),
+    loader: () => import('./pages/resizeLayout'),
   },
   {
     name: 'Dialog',
     path: '/dialog',
-    component: require('./pages/dialog'),
+    loader: () => import('./pages/dialog'),
   },
   {
     name: 'D3Class',
     path: '/d3-class',
-    component: require('./pages/d3/class'),
+    loader: () => import('./pages/d3/class'),
   },
   {
     name: 'D3Func',
     path: '/d3-func',
-    component: require('./pages/d3/func'),
+    loader: () => import('./pages/d3/func'),
   },
   {
     name: 'DragDrop',
     path: '/drag-drop',
-    component: require('./pages/dragDrop'),
+    loader: () => import('./pages/dragDrop'),
   },
   {
     name: 'Dnd',
     path: '/dnd',
-    component: require('./pages/dnd'),
+    loader: () => import('./pages/dnd'),
   },
   {
     name: 'DndPro',
     path: '/dnd-pro',
-    component: require('./pages/dndPro'),
+    loader: () => import('./pages/dndPro'),
   },
-  { name: 'Home', path: '/', component: require('./pages/index') },
+  {
+    name: 'Home',
+    path: '/',
+    loader: () => import('./pages/index'),
+  },
 ];
+
 function App(props) {
   const { loggedIn } = props;
   const selectedKeys = window.location.pathname.replace(/^\//, '').split('/');
@@ -100,7 +115,7 @@ function App(props) {
         <div style={{ padding: '50px' }}>
           <Switch>
             <Route path="/login">
-              <Login />
+              <AsyncLogin />
             </Route>
             <Route path="/table/:page?">
               <Table />
@@ -112,8 +127,11 @@ function App(props) {
             <Route path="/step">
               <Step />
             </Route>
-            {routers.map(({ path, component }) => {
-              const Component = component.default;
+            {routers.map(({ path, loader }) => {
+              const Component = Loadable({
+                loader,
+                loading: Loading,
+              });
               return (
                 <Route key={path} path={path}>
                   <Component />

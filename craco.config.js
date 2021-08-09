@@ -6,4 +6,7 @@ module.exports = {
       '@': path.resolve('src'),
     },
   },
+  babel: {
+    // plugins: ['@babel/plugin-syntax-dynamic-import'],
+  },
 };
