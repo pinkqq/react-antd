@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { createSelector } from 'reselect';
 import { Input, Table } from 'antd';
 import { fetchList, fetchUser } from '../store/action/table';
 
@@ -15,7 +16,6 @@ const TablePage = (props) => {
 
   const {
     items,
-    byId,
     fetchList,
     fetchListError,
     fetchListPending,
@@ -23,18 +23,13 @@ const TablePage = (props) => {
     total,
     pageSize,
     listNeedReload,
+    dataSource,
   } = props;
-
-  const getDataSource = () => {
-    if (!items) return [];
-    return items.map((id) => byId[id]);
-  };
 
   useEffect(() => {
     const initPage = routerPage || 1;
-
     // 页码变化 || 未拉取过数据 || 需要 reload
-    if (page !== initPage || !getDataSource().length || listNeedReload)
+    if (page !== initPage || !dataSource.length || listNeedReload)
       fetchList(parseInt(initPage, 10));
     // eslint-disable-next-line
   }, []);
@@ -64,7 +59,7 @@ const TablePage = (props) => {
         onSearch={handleSearch}
       />
       <Table
-        dataSource={getDataSource()}
+        dataSource={dataSource}
         style={{ width: '800px', margin: '50px auto' }}
         rowKey="id"
         loading={fetchListPending}
@@ -91,9 +86,19 @@ const TablePage = (props) => {
   );
 };
 
+const getItems = (state) => state.items;
+const getById = (state) => state.byId;
+
+const dataSourceSelector = createSelector(getItems, getById, (items, byId) => {
+  console.log('reselect: get data sourc!');
+  if (!items) return [];
+  return items.map((id) => byId[id]);
+});
+
 const mapStateToProps = function (state) {
   return {
     ...state.table,
+    dataSource: dataSourceSelector(state.table),
   };
 };
 const mapDispatchToProps = { fetchList, fetchUser };
