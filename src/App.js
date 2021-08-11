@@ -25,6 +25,11 @@ const AsyncLogin = Loadable({
 
 const routers = [
   {
+    name: 'Suspense',
+    path: '/suspense',
+    loader: () => import('./pages/suspense'),
+  },
+  {
     name: 'Form',
     path: '/form',
     loader: () => import('./pages/form'),
